@@ -2,7 +2,6 @@ const User = require("../models/userModel");
 
 exports.postUser = async (req, res, next) => {
   try {
-    console.log(req.body);
     const user = await User.updateOne(
       { email: req.params.email },
       {

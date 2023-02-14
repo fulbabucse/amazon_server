@@ -8,7 +8,12 @@ app.use(cors());
 app.use(express.json());
 
 const userRoutes = require("./routes/userRoute");
+const adminRoutes = require("./routes/adminRoutes");
+const productRoutes = require("./routes/productRoutes");
+
 app.use("/users", userRoutes);
+app.use("/admin", adminRoutes);
+app.use("/products", productRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Crafty Commerce server");

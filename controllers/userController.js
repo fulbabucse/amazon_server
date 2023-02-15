@@ -30,3 +30,12 @@ exports.getUser = async (req, res, next) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+exports.getSingleUser = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    res.send(user);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+};

@@ -13,7 +13,8 @@ exports.getProducts = async (req, res, next) => {
       rating: { $gt: rating },
     })
       .skip(page * size)
-      .limit(size);
+      .limit(size)
+      .sort({ createAt: -1 });
     const count = await Product.estimatedDocumentCount();
     res.status(200).send({ products, count });
   } catch (error) {
@@ -39,7 +40,7 @@ exports.getAllAdminProducts = async (req, res, next) => {
 
 exports.getAllProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({});
+    const products = await Product.find({}).sort({ createAt: -1 });
     res.send(products);
   } catch (error) {
     res.status(500).send({ message: error.message });

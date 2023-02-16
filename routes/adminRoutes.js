@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
+const adminController = require("../controllers/adminController");
+
 router.get("/jwt", (req, res) => {
   const email = req.query.email;
   const token = jwt.sign({ email }, process.env.SECRET_TOKEN, {
@@ -11,14 +13,7 @@ router.get("/jwt", (req, res) => {
   res.status(200).send({ token });
 });
 
-module.exports = router;
+router.post("/images", adminController.postImages);
+router.get("/images", adminController.getImages);
 
-/*
-exports.getToken = (req, res) => {
-  const email = req.query.email;
-  const token = jwt.sign({ email }, process.env.SECRET_TOKEN, {
-    expiresIn: "1d",
-  });
-  res.send({ accessToken: token });
-};
-*/
+module.exports = router;

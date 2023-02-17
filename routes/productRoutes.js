@@ -10,4 +10,8 @@ router.get("/all/:category", productController.getCategoryProducts);
 router.get("/admin/all", productController.getAllAdminProducts);
 router.get("/:id", productController.getSingleProduct);
 
+// Review
+router.post("/review", productController.postReview);
+router.get("/review/:id", productController.getSingleProductReviews);
+
 module.exports = router;

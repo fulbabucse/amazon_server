@@ -1,4 +1,5 @@
 const Product = require("../models/productsModel");
+const Review = require("../models/reviewModel");
 
 exports.getProducts = async (req, res, next) => {
   try {
@@ -46,6 +47,7 @@ exports.getAllProducts = async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 };
+
 exports.getSingleProduct = async (req, res, next) => {
   try {
     const product = await Product.findOne({ _id: req.params.id });
@@ -60,7 +62,39 @@ exports.getCategoryProducts = async (req, res, next) => {
     const category = req.params.category;
     const products = await Product.find({ category });
     res.send(products);
-    // }
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+// Review
+
+exports.postReview = async (req, res, next) => {
+  try {
+    const reviews = new Review({
+      name: req.body.name,
+      productId: req.body.productId,
+      email: req.body.email,
+      user_image: req.body.image,
+      message: req.body.message,
+      reviewed_date: req.body.reviewed_date,
+      user_join_date: req.body.join_date,
+      product_images: req.body.images,
+      rating: parseFloat(req.body.rating),
+    });
+    const result = await reviews.save();
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.getSingleProductReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.find({ productId: req.params.id }).sort({
+      createAt: -1,
+    });
+    res.status(200).send(reviews);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

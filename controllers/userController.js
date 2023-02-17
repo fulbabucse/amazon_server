@@ -8,6 +8,7 @@ exports.postUser = async (req, res, next) => {
         $set: {
           name: req.body.name,
           email: req.body.email,
+          join_date: req.body.join_date,
           photoURL: req.body.photo,
         },
       },

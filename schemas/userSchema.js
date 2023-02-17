@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  join_date: {
+    type: String,
+    required: true,
+  },
   photoURL: {
     type: String,
     required: true,

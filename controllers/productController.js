@@ -67,6 +67,43 @@ exports.getCategoryProducts = async (req, res, next) => {
   }
 };
 
+exports.postBook = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const product = new Product({
+      title: data.title,
+      description: data.description,
+      price: parseInt(data.price),
+      discountPercentage: parseFloat(data.discountPercentage),
+      rating: parseFloat(data.rating),
+      stock: parseInt(data.stock),
+      category: data.category,
+      thumbnail: data.images[0],
+      images: data.images,
+      author: req.body.author,
+      book_page_length: parseInt(data.book_page_length),
+      language: data.language,
+      publication_date: data.publication_date,
+      paper_type: data.paper_type,
+      department: data.department,
+      isbn: data.isbn,
+    });
+    const saveBook = await product.save();
+    res.status(200).send(saveBook);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.getBooks = async (req, res, next) => {
+  try {
+    const books = await Product.find({ category: "books" });
+    res.send(books);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
 // Review
 
 exports.postReview = async (req, res, next) => {

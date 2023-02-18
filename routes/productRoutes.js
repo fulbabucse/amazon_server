@@ -10,6 +10,10 @@ router.get("/all/:category", productController.getCategoryProducts);
 router.get("/admin/all", productController.getAllAdminProducts);
 router.get("/:id", productController.getSingleProduct);
 
+// Post
+router.post("/book/post", productController.postBook);
+router.get("/books/get", productController.getBooks);
+
 // Review
 router.post("/review", productController.postReview);
 router.get("/review/:id", productController.getSingleProductReviews);

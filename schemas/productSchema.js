@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
   },
   discountPercentage: {
     type: Number,
-    required: true,
+    required: false,
   },
   rating: {
     type: Number,
@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
   },
   brand: {
     type: String,
-    required: true,
+    required: false,
   },
   category: {
     type: String,
@@ -40,6 +40,34 @@ const productSchema = new mongoose.Schema({
   images: {
     type: Array,
     required: true,
+  },
+  author: {
+    type: String,
+    required: false,
+  },
+  book_page_length: {
+    type: Number,
+    required: false,
+  },
+  language: {
+    type: String,
+    required: false,
+  },
+  publication_date: {
+    type: String,
+    required: false,
+  },
+  paper_type: {
+    type: String,
+    required: false,
+  },
+  department: {
+    type: String,
+    required: true,
+  },
+  isbn: {
+    type: String,
+    required: false,
   },
   createAt: {
     type: Number,

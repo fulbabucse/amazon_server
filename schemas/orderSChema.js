@@ -25,6 +25,10 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  rate: {
+    type: Number,
+    required: true,
+  },
   brand: {
     type: String,
     required: false,
@@ -37,7 +41,7 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  Size: {
+  size: {
     type: String,
     required: false,
   },
@@ -48,10 +52,10 @@ const orderSchema = new mongoose.Schema({
       month: "short",
       day: "numeric",
     }),
-    createAt: {
-      type: Number,
-      default: Date.now(),
-    },
+  },
+  createAt: {
+    type: Number,
+    default: Date.now(),
   },
 });
 

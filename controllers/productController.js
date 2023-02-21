@@ -104,6 +104,15 @@ exports.getBooks = async (req, res, next) => {
   }
 };
 
+exports.getFashionProducts = async (req, res, next) => {
+  try {
+    const fashions = await Product.find({ department: "fashions" });
+    res.status(200).send(fashions);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
 // Review
 
 exports.postReview = async (req, res, next) => {
@@ -132,6 +141,18 @@ exports.getSingleProductReviews = async (req, res, next) => {
       createAt: -1,
     });
     res.status(200).send(reviews);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.getSearchProducts = async (req, res, next) => {
+  try {
+    const { dept, key } = req.query;
+    const title = RegExp(key, "i");
+    const department = RegExp(dept, "i");
+    const products = await Product.find({ $or: [{ title }, { department }] });
+    res.status(200).send(products);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

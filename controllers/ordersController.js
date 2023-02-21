@@ -5,32 +5,44 @@ exports.postOrders = async (req, res, next) => {
   try {
     const productId = req.body.productId;
     const product = await Product.findById({ _id: productId });
-    const checkOrder = await Order.findOne({ productId });
+    const checkOrders = await Order.find({ customer_email: req.body.email });
 
-    if (!checkOrder?.productId) {
-      const order = new Order({
-        product_name: product.title,
-        customer_email: req.body.email,
-        category: product.category,
-        productId: product._id,
-        image: product.thumbnail,
-        price: parseFloat(req.body.price) * parseFloat(req.body.quantity),
-        rate: parseFloat(req.body.price),
-        brand: product.brand ? product.brand : "",
-        department: product.department,
-        quantity: parseInt(req.body.quantity),
-        size: req.body.size ? req.body.size : "",
-      });
-      const saveOrder = await order.save();
-      res.status(200).send({
-        message: "Successful carted this product !!",
-        order: saveOrder,
-      });
-    } else {
-      res
+    const data = {
+      product_name: product.title,
+      customer_email: req.body.email,
+      category: product.category,
+      productId,
+      image: product.thumbnail,
+      price: parseFloat(req.body.price) * parseFloat(req.body.quantity),
+      rate: parseFloat(req.body.price),
+      brand: product.brand ? product.brand : "",
+      department: product.department,
+      quantity: parseInt(req.body.quantity),
+      size: req.body.size ? req.body.size : "",
+    };
+
+    if (checkOrders?.length > 0) {
+      const haveAlready = checkOrders?.find(
+        (product) => product?.productId === productId
+      );
+      if (haveAlready) {
+        return res
+          .status(404)
+          .send({ message: "This product already have your cart !!" });
+      }
+
+      const order = new Order(data);
+      const result = await order.save();
+      return res
         .status(200)
-        .send({ message: "This product already have your cart !!" });
+        .send({ message: "Successfully carted One Item !!", result });
     }
+
+    const order = new Order(data);
+    const result = await order.save();
+    return res
+      .status(200)
+      .send({ message: "Successfully carted One Item !!", result });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -70,6 +82,15 @@ exports.updateQuantity = async (req, res, next) => {
       }
     );
     res.status(200).send({ message: "success", product });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.deleteProductFromCart = async (req, res, next) => {
+  try {
+    const deleteOrder = await Order.deleteOne({ _id: req.params.id });
+    res.status(200).send(deleteOrder);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

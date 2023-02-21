@@ -2,20 +2,34 @@ const express = require("express");
 
 const router = express.Router();
 
-const productController = require("../controllers/productController");
+const {
+  getAllAdminProducts,
+  getAllProducts,
+  getBooks,
+  getCategoryProducts,
+  getProducts,
+  getSingleProduct,
+  getSingleProductReviews,
+  postBook,
+  postReview,
+  getFashionProducts,
+  getSearchProducts,
+} = require("../controllers/productController");
 
-router.get("/", productController.getProducts);
-router.get("/all", productController.getAllProducts);
-router.get("/all/:category", productController.getCategoryProducts);
-router.get("/admin/all", productController.getAllAdminProducts);
-router.get("/:id", productController.getSingleProduct);
+router.get("/", getProducts);
+router.get("/all", getAllProducts);
+router.get("/all/:category", getCategoryProducts);
+router.get("/admin/all", getAllAdminProducts);
+router.get("/:id", getSingleProduct);
+router.get("/books/get", getBooks);
+router.get("/fashions/get", getFashionProducts);
+router.get("/search/get", getSearchProducts);
 
 // Post
-router.post("/book/post", productController.postBook);
-router.get("/books/get", productController.getBooks);
+router.post("/book/post", postBook);
 
 // Review
-router.post("/review", productController.postReview);
-router.get("/review/:id", productController.getSingleProductReviews);
+router.post("/review", postReview);
+router.get("/review/:id", getSingleProductReviews);
 
 module.exports = router;

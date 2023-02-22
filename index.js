@@ -14,12 +14,14 @@ const adminRoutes = require("./routes/adminRoutes");
 const productRoutes = require("./routes/productRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const ordersRoutes = require("./routes/ordersRoutes");
+const paymentsRoutes = require("./routes/paymentsRoutes");
 
 app.use("/users", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/orders", ordersRoutes);
+app.use("/payments", paymentsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Crafty Commerce server");

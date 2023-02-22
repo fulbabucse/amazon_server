@@ -9,6 +9,7 @@ const {
   deleteProductFromCart,
   postBillingAddress,
   getBillingAddress,
+  deleteOrders,
 } = require("../controllers/ordersController");
 
 router.post("/", postOrders);
@@ -16,6 +17,7 @@ router.get("/", getAllOrders);
 router.get("/:email", getOrderByUser);
 router.patch("/update-quantity/:id", updateQuantity);
 router.delete("/:id", deleteProductFromCart);
+router.delete("/after-purchase/:email", deleteOrders);
 
 // Billing
 router.post("/billings", postBillingAddress);

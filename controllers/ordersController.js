@@ -1,6 +1,8 @@
 const Product = require("../models/productsModel");
 const Order = require("../schemas/orderSChema");
 const Billing = require("../schemas/billingSchema");
+const Payment = require("../schemas/paymentSchema");
+const { v4: tranSectionId } = require("uuid");
 
 exports.postOrders = async (req, res, next) => {
   try {
@@ -148,6 +150,49 @@ exports.getBillingAddress = async (req, res, next) => {
   try {
     const addresses = await Billing.findOne({ email: req.params.email });
     res.status(200).send(addresses);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.deleteOrders = async (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const trans_id = `crafty_tranID_${
+      tranSectionId()?.split("-")?.slice(-1)[0]
+    }`;
+
+    const orders = await Order.find({ customer_email: email });
+    const data = await Billing.findOne({ email });
+
+    const subTotal = orders?.reduce((total, current) => {
+      return (
+        parseFloat(Math.ceil(total)) + parseFloat(Math.ceil(current.price))
+      );
+    }, 0);
+
+    const totalPrice = data.country === "Bangladesh" ? 3 : 17;
+    const price = parseFloat((subTotal + totalPrice).toFixed(2));
+    const paymentData = {
+      customer_name: data.name,
+      email: data.email,
+      price,
+      products: orders,
+      trans_id,
+      name: data.name,
+    };
+
+    if (orders?.length > 0) {
+      const payments = new Payment(paymentData);
+      const result = await payments.save();
+      res.status(200).send(result);
+    }
+
+    if (req.params.email) {
+      await Order.deleteMany({
+        customer_email: req.params.email,
+      });
+    }
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

@@ -29,7 +29,7 @@ exports.createPaymentSession = async (req, res, next) => {
             type: "fixed_amount",
             fixed_amount: {
               amount:
-                billingAddress?.country === "Bangladesh" ? 3 * 100 : 17 * 100,
+                billingAddress?.country === "Bangladesh" ? 4 * 100 : 24 * 100,
               currency: "usd",
             },
             display_name: "Crafty Air Corporation",

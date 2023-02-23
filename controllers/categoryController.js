@@ -1,5 +1,7 @@
+// Category Model
 const Category = require("../models/categoryModel");
 
+// Example Route: http://localhost:5000/categories
 exports.getCategories = async (req, res, next) => {
   try {
     const categories = await Category.find({}).sort({ createAt: 1 });

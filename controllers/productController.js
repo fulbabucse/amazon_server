@@ -1,6 +1,7 @@
 const Product = require("../models/productsModel");
 const Review = require("../models/reviewModel");
 
+// Example Route: http://localhost:5000/products?start=${start}&end=${end}&page=${page}&size=${size}&rating=${rating}
 exports.getProducts = async (req, res, next) => {
   try {
     const start = parseInt(req.query.start);
@@ -23,6 +24,7 @@ exports.getProducts = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/admin/all?page=${page}&size=${size}
 exports.getAllAdminProducts = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page);
@@ -39,6 +41,7 @@ exports.getAllAdminProducts = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/all
 exports.getAllProducts = async (req, res, next) => {
   try {
     const products = await Product.find({}).sort({ createAt: -1 });
@@ -48,6 +51,7 @@ exports.getAllProducts = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/${id}
 exports.getSingleProduct = async (req, res, next) => {
   try {
     const product = await Product.findOne({ _id: req.params.id });
@@ -57,6 +61,7 @@ exports.getSingleProduct = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/all/${category}}
 exports.getCategoryProducts = async (req, res, next) => {
   try {
     const category = req.params.category;
@@ -67,6 +72,7 @@ exports.getCategoryProducts = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/book/post
 exports.postBook = async (req, res, next) => {
   try {
     const data = req.body;
@@ -95,6 +101,7 @@ exports.postBook = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/books/get
 exports.getBooks = async (req, res, next) => {
   try {
     const books = await Product.find({ category: "books" });
@@ -104,6 +111,7 @@ exports.getBooks = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/fashions/get
 exports.getFashionProducts = async (req, res, next) => {
   try {
     const fashions = await Product.find({ department: "fashions" });
@@ -115,6 +123,7 @@ exports.getFashionProducts = async (req, res, next) => {
 
 // Review
 
+// Example Route: http://localhost:5000/products/review
 exports.postReview = async (req, res, next) => {
   try {
     const reviews = new Review({
@@ -135,6 +144,7 @@ exports.postReview = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/review/${id}
 exports.getSingleProductReviews = async (req, res, next) => {
   try {
     const reviews = await Review.find({ productId: req.params.id }).sort({
@@ -146,12 +156,24 @@ exports.getSingleProductReviews = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/products/search/get?dept=${dept}&key=${key}
 exports.getSearchProducts = async (req, res, next) => {
   try {
     const { dept, key } = req.query;
     const title = RegExp(key, "i");
     const department = RegExp(dept, "i");
     const products = await Product.find({ $or: [{ title }, { department }] });
+    res.status(200).send(products);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+// Example Route: http://localhost:5000/products/dept/all/${department}
+exports.getProductsByDepartment = async (req, res, next) => {
+  try {
+    const { department } = req.params;
+    const products = await Product.find({ department });
     res.status(200).send(products);
   } catch (error) {
     res.status(500).send({ message: error.message });

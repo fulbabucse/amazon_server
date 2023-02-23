@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 
+// Example Route: http://localhost:5000/users/${email}
 exports.postUser = async (req, res, next) => {
   try {
     const user = await User.updateOne(
@@ -20,6 +21,7 @@ exports.postUser = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/users
 exports.getUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.query.email }, { __v: 0 });
@@ -32,6 +34,7 @@ exports.getUser = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/single/${email}
 exports.getSingleUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.params.email });

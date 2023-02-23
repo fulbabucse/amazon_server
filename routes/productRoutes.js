@@ -14,7 +14,9 @@ const {
   postReview,
   getFashionProducts,
   getSearchProducts,
+  getProductsByDepartment,
 } = require("../controllers/productController");
+const authentication = require("../middleware/authentication");
 
 router.get("/", getProducts);
 router.get("/all", getAllProducts);
@@ -24,12 +26,13 @@ router.get("/:id", getSingleProduct);
 router.get("/books/get", getBooks);
 router.get("/fashions/get", getFashionProducts);
 router.get("/search/get", getSearchProducts);
+router.get("/dept/all/:department", getProductsByDepartment);
 
 // Post
-router.post("/book/post", postBook);
+router.post("/book/post", authentication, postBook);
 
 // Review
-router.post("/review", postReview);
-router.get("/review/:id", getSingleProductReviews);
+router.post("/review", authentication, postReview);
+router.get("/review/:id", authentication, getSingleProductReviews);
 
 module.exports = router;

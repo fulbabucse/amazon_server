@@ -2,6 +2,7 @@ const Order = require("../schemas/orderSChema");
 const Billing = require("../schemas/billingSchema");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+// Example Route: http://localhost:5000/payments/create-checkout-session
 exports.createPaymentSession = async (req, res, next) => {
   try {
     const { email } = req.body;

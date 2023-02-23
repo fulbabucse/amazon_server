@@ -1,6 +1,8 @@
+// Import
 const User = require("../models/userModel");
 const Image = require("../models/ImageModel");
 
+// Example Route: http://localhost:5000/users?email=${email}
 exports.getAdmin = async (req, res, next) => {
   try {
     const adminRole = await User.findOne({ email: req.query.email });
@@ -10,6 +12,7 @@ exports.getAdmin = async (req, res, next) => {
   }
 };
 
+// Post Image Controller for Testing
 exports.postImages = async (req, res, next) => {
   try {
     if (req.body.length > 0) {
@@ -22,6 +25,7 @@ exports.postImages = async (req, res, next) => {
   }
 };
 
+// Get Images Controller for Testing
 exports.getImages = async (req, res, next) => {
   try {
     const image = await Image.find({});

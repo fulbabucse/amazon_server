@@ -1,9 +1,11 @@
+// Import Models
 const Product = require("../models/productsModel");
 const Order = require("../schemas/orderSChema");
 const Billing = require("../schemas/billingSchema");
 const Payment = require("../schemas/paymentSchema");
 const { v4: tranSectionId } = require("uuid");
 
+// Example Route: http://localhost:5000/orders
 exports.postOrders = async (req, res, next) => {
   try {
     const productId = req.body.productId;
@@ -51,6 +53,7 @@ exports.postOrders = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/orders/${email}
 exports.getOrderByUser = async (req, res, next) => {
   try {
     const orders = await Order.find(
@@ -63,6 +66,7 @@ exports.getOrderByUser = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/orders
 exports.getAllOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({});
@@ -72,6 +76,7 @@ exports.getAllOrders = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/orders/update-quantity/${data.productId}
 exports.updateQuantity = async (req, res, next) => {
   try {
     const order = await Order.findById({ _id: req.body.productId });
@@ -90,6 +95,7 @@ exports.updateQuantity = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/orders/${id}
 exports.deleteProductFromCart = async (req, res, next) => {
   try {
     const deleteOrder = await Order.deleteOne({ _id: req.params.id });
@@ -101,6 +107,7 @@ exports.deleteProductFromCart = async (req, res, next) => {
 
 // Billing Address
 
+// Example Route: http://localhost:5000/orders/billings
 exports.postBillingAddress = async (req, res, next) => {
   try {
     const {
@@ -146,6 +153,7 @@ exports.postBillingAddress = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/orders/billings/${email}
 exports.getBillingAddress = async (req, res, next) => {
   try {
     const addresses = await Billing.findOne({ email: req.params.email });
@@ -155,6 +163,7 @@ exports.getBillingAddress = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/orders/after-purchase/${email}
 exports.deleteOrders = async (req, res, next) => {
   try {
     const email = req.params.email;

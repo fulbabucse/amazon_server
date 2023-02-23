@@ -24,11 +24,11 @@ app.use("/orders", ordersRoutes);
 app.use("/payments", paymentsRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to Crafty Commerce server");
+  res.send("Welcome to Amazon server");
 });
 
 DBConn(process.env.DATABASE_URI);
 
 app.listen(5000, () => {
-  console.log("Crafty Commerce server running on port 5000");
+  console.log("Amazon server running on port 5000");
 });

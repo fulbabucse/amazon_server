@@ -11,16 +11,17 @@ const {
   getBillingAddress,
   deleteOrders,
 } = require("../controllers/ordersController");
+const authentication = require("../middleware/authentication");
 
-router.post("/", postOrders);
-router.get("/", getAllOrders);
-router.get("/:email", getOrderByUser);
-router.patch("/update-quantity/:id", updateQuantity);
-router.delete("/:id", deleteProductFromCart);
-router.delete("/after-purchase/:email", deleteOrders);
+router.post("/", authentication, postOrders);
+router.get("/", authentication, getAllOrders);
+router.get("/:email", authentication, getOrderByUser);
+router.patch("/update-quantity/:id", authentication, updateQuantity);
+router.delete("/:id", authentication, deleteProductFromCart);
+router.delete("/after-purchase/:email", authentication, deleteOrders);
 
 // Billing
-router.post("/billings", postBillingAddress);
-router.get("/billings/:email", getBillingAddress);
+router.post("/billings", authentication, postBillingAddress);
+router.get("/billings/:email", authentication, getBillingAddress);
 
 module.exports = router;

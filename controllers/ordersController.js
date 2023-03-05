@@ -1,5 +1,5 @@
 // Import Models
-const Product = require("../models/productsModel");
+const Product = require("../schemas/productSchema");
 const Order = require("../schemas/orderSChema");
 const Billing = require("../schemas/billingSchema");
 const Payment = require("../schemas/paymentSchema");

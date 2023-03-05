@@ -69,10 +69,103 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  age: {
+    type: String,
+    required: false,
+  },
+  capacity: {
+    type: String,
+    required: false,
+  },
+  color: {
+    type: String,
+    required: false,
+  },
+  compatible_device: {
+    type: String,
+    required: false,
+  },
+  connectivity_tech: {
+    type: String,
+    required: false,
+  },
+  connector_type: {
+    type: String,
+    required: false,
+  },
+  graphics_coprocessor: {
+    type: String,
+    required: false,
+  },
+  hd_interface: {
+    type: String,
+    required: false,
+  },
+  item_weight: {
+    type: String,
+    required: false,
+  },
+  material_dimension: {
+    type: String,
+    required: false,
+  },
+  materials: {
+    type: String,
+    required: false,
+  },
+  model: {
+    type: String,
+    required: false,
+  },
+  os: {
+    type: String,
+    required: false,
+  },
+  power_source: {
+    type: String,
+    required: false,
+  },
+  printing_tech: {
+    type: String,
+    required: false,
+  },
+  ram: {
+    type: Number,
+    required: false,
+  },
+  refresh_rate: {
+    type: String,
+    required: false,
+  },
+  resolution: {
+    type: String,
+    required: false,
+  },
+  screen_size: {
+    type: String,
+    required: false,
+  },
+  special_features: {
+    type: String,
+    required: false,
+  },
+  style: {
+    type: String,
+    required: false,
+  },
+  theme: {
+    type: String,
+    required: false,
+  },
+  voltage: {
+    type: String,
+    required: false,
+  },
   createAt: {
     type: Number,
     default: Date.now(),
   },
 });
 
-module.exports = productSchema;
+module.exports = mongoose.model("Product", productSchema);
+// 40

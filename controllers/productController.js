@@ -1,4 +1,4 @@
-const Product = require("../models/productsModel");
+const Product = require("../schemas/productSchema");
 const Review = require("../models/reviewModel");
 
 // Example Route: http://localhost:5000/products?start=${start}&end=${end}&page=${page}&size=${size}&rating=${rating}
@@ -73,29 +73,61 @@ exports.getCategoryProducts = async (req, res, next) => {
 };
 
 // Example Route: http://localhost:5000/products/book/post
-exports.postBook = async (req, res, next) => {
+exports.postProduct = async (req, res, next) => {
   try {
-    const data = req.body;
-    const product = new Product({
-      title: data.title,
-      description: data.description,
-      price: parseInt(data.price),
-      discountPercentage: parseFloat(data.discountPercentage),
-      rating: parseFloat(data.rating),
-      stock: parseInt(data.stock),
-      category: data.category,
-      thumbnail: data.images[0],
-      images: data.images,
-      author: req.body.author,
-      book_page_length: parseInt(data.book_page_length),
-      language: data.language,
-      publication_date: data.publication_date,
-      paper_type: data.paper_type,
-      department: data.department,
-      isbn: data.isbn,
-    });
-    const saveBook = await product.save();
-    res.status(200).send(saveBook);
+    const body = req.body;
+    const data = {
+      title: body.title,
+      description: body.description,
+      price: parseFloat(body.price),
+      discountPercentage: body.discountPercentage || null,
+      rating: parseFloat(body.rating),
+      stock: parseInt(body.stock),
+      brand: body.brand || null,
+      category: body.category,
+      thumbnail: body.images[0] || null,
+      images: body.images,
+      author: body.author || null,
+      book_page_length: parseInt(body.book_page_length) || null,
+      language: body.language || null,
+      publication_date: body.publication_date || null,
+      paper_type: body.paper_type || null,
+      department: body.department || null,
+      isbn: body.isbn || null,
+      age: body.age || null,
+      capacity: body.capacity || null,
+      compatible_device: body.compatible_device || null,
+      connectivity_tech: body.connectivity_tech || null,
+      connector_type: body.connector_type || null,
+      graphics_coprocessor: body.graphics_coprocessor || null,
+      hd_interface: body.hd_interface || null,
+      item_weight: body.item_weight || null,
+      material_dimension: body.material_dimension || null,
+      materials: body.materials || null,
+      model: body.model || null,
+      os: body.os || null,
+      power_source: body.power_source || null,
+      printing_tech: body.printing_tech || null,
+      ram: parseInt(body.ram) || null,
+      refresh_rate: body.refresh_rate || null,
+      resolution: body.resolution || null,
+      screen_size: body.screen_size || null,
+      special_features: body.special_features || null,
+      style: body.style || null,
+      voltage: body.voltage || null,
+    };
+    const product = new Product(data);
+    const result = await product.save();
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    const product = await Product.deleteOne({ _id: req.params.id });
+    res.status(200).send(product);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

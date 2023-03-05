@@ -10,11 +10,12 @@ const {
   getProducts,
   getSingleProduct,
   getSingleProductReviews,
-  postBook,
+  postProduct,
   postReview,
   getFashionProducts,
   getSearchProducts,
   getProductsByDepartment,
+  deleteProduct,
 } = require("../controllers/productController");
 const authentication = require("../middleware/authentication");
 
@@ -23,13 +24,14 @@ router.get("/all", getAllProducts);
 router.get("/all/:category", getCategoryProducts);
 router.get("/admin/all", getAllAdminProducts);
 router.get("/:id", getSingleProduct);
+router.delete("/:id", deleteProduct);
 router.get("/books/get", getBooks);
 router.get("/fashions/get", getFashionProducts);
 router.get("/search/get", getSearchProducts);
 router.get("/dept/all/:department", getProductsByDepartment);
 
 // Post
-router.post("/book/post", authentication, postBook);
+router.post("/product/post", authentication, postProduct);
 
 // Review
 router.post("/review", authentication, postReview);

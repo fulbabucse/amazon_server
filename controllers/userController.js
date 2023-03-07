@@ -34,6 +34,16 @@ exports.getUser = async (req, res, next) => {
   }
 };
 
+// Example Route: http://localhost:5000/users/all
+exports.getUsers = async (req, res, next) => {
+  try {
+    const users = await User.find({});
+    res.status(200).send(users);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+};
+
 // Example Route: http://localhost:5000/single/${email}
 exports.getSingleUser = async (req, res, next) => {
   try {

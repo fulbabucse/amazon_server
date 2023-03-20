@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 // Controller
-const { getImages, postImages } = require("../controllers/adminController");
+const { sendMessage, getMessages } = require("../controllers/adminController");
 
 // JSON Web Token
 router.get("/jwt", (req, res) => {
@@ -16,8 +16,8 @@ router.get("/jwt", (req, res) => {
   res.status(200).send({ token });
 });
 
-router.post("/images", postImages);
-router.get("/images", getImages);
+router.post("/contact/send-message", sendMessage);
+router.get("/contact/send-message", getMessages);
 
 // Export router
 module.exports = router;

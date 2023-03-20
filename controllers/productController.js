@@ -118,7 +118,7 @@ exports.postProduct = async (req, res, next) => {
     };
     const product = new Product(data);
     const result = await product.save();
-    res.status(200).send(result);
+    res.status(200).send(body);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

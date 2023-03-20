@@ -167,7 +167,7 @@ exports.getBillingAddress = async (req, res, next) => {
 exports.deleteOrders = async (req, res, next) => {
   try {
     const email = req.params.email;
-    const trans_id = `crafty_tranID_${
+    const trans_id = `amazon_tranID_${
       tranSectionId()?.split("-")?.slice(-1)[0]
     }`;
 

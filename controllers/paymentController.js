@@ -1,5 +1,6 @@
 const Order = require("../schemas/orderSChema");
 const Billing = require("../schemas/billingSchema");
+const Payment = require("../schemas/paymentSchema");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // Example Route: http://localhost:5000/payments/create-checkout-session
@@ -48,6 +49,16 @@ exports.createPaymentSession = async (req, res, next) => {
     });
 
     res.status(200).send({ url: session.url });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.getOrdersByEmail = async (req, res, next) => {
+  try {
+    const { email } = req.decoded;
+    const orders = await Payment.find({ email });
+    res.status(200).send(orders);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
